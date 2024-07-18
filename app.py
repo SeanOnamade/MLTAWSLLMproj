@@ -23,15 +23,24 @@ class SecEdgar:
         #     if entry['title'] == title:
         #         return (entry['title'], entry['cik_str'], entry['ticker'])
         # return "Entry not found"
-        return self.nameDict[title]
+        return self.nameDict.get(title, "Entry Not Found")
             
     def ticker_to_cik(self, ticker):
         # for entry in self.filejson.values():
         #     if entry['ticker'] == ticker:
         #         return (entry['title'], entry['cik_str'], entry['ticker'])
         # return "Entry not found"
-        return self.tickerDict[ticker]
+        return self.tickerDict.get(ticker, "Entry Not Found")
 
 se = SecEdgar('https://www.sec.gov/files/company_tickers.json')
 print(se.name_to_cik("Apple Inc."))
 print(se.ticker_to_cik("GOOGL"))
+while True:
+    x = input("\nPut in a name or ticker (case sensitive), or enter q to quit: \n")
+    if x == "q": 
+        break
+    else:
+        y = se.name_to_cik(x)
+        if y == "Entry Not Found":
+            y = se.ticker_to_cik(x)
+        print(f"\nInfo on {x}: {y}")
